@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('sender');
             $table->string('bill_to');
             $table->string('ship_to');
-            $table->date('date');
-            $table->date('due_date');
+            $table->string('date');
+            $table->string('due_date');
             $table->string('additional_note');
             $table->string('notes');
             $table->string('terms');
