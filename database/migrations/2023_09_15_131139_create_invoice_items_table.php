@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('rate');
             $table->integer('discount');
             $table->double('amount',8,2);
+            $table->foreignId('invoice_id')->constrained();
             $table->timestamps();
         });
     }

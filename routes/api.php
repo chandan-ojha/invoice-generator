@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\InvoiceGeneratorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Create a new invoice
+Route::post('invoice-create-api', [InvoiceGeneratorController::class, 'invoice_create_api']);
+Route::post('invoice-create', [InvoiceGeneratorController::class, 'invoice_create']);

@@ -25,9 +25,7 @@ return new class extends Migration
             $table->double('sub_total',8,2);
             $table->integer('tax');
             $table->double('total',8,2);
-            $table->bigInteger('invoice_item_id')->unsigned()->nullable();
             $table->timestamps();
-            $table->foreign('invoice_item_id')->references('id')->on('invoice_items')->onDelete('cascade');
         });
     }
 
