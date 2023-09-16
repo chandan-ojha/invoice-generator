@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
+use Inertia\Inertia;
 use Illuminate\Http\Request;
 
 class InvoiceGeneratorController extends Controller
@@ -49,7 +50,7 @@ class InvoiceGeneratorController extends Controller
 
         // Create a new invoice record
         $invoice = new Invoice();
-        $invoice->invoice_number = $input['invoice_number'];
+        $invoice->invoice_number = $input['invoice_number'] ;
         $invoice->sender = $input['sender'];
         $invoice->bill_to = $input['bill_to'];
         $invoice->ship_to = $input['ship_to'];
@@ -76,7 +77,8 @@ class InvoiceGeneratorController extends Controller
             $invoice_item->save();
         }
 
-        return response()->json(['message' => 'Invoice created successfully'], 200);
+        return redirect()->back();
+
     }
 
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\InvoiceGeneratorController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -18,9 +19,12 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('InvoiceGenerator', [
         'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
+        'canRegister' => Route::has('register')
     ]);
 });
+
+Route::post('/invoice-create', [InvoiceGeneratorController::class, 'invoice_create'])->name('invoice.create');
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
