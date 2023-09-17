@@ -19,6 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Create a new invoice
 Route::post('invoice-create', [InvoiceGeneratorController::class, 'invoice_create_api']);
 
