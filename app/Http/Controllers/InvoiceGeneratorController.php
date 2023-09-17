@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
-use Inertia\Inertia;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class InvoiceGeneratorController extends Controller
@@ -11,6 +11,36 @@ class InvoiceGeneratorController extends Controller
     protected final function invoice_create_api(Request $request)
     {
         $input = json_decode($request->input('invoice'), true);
+
+        if(!isset($input)){
+            return response()->json(['message' => 'Invoice data is required'], 400);
+        }
+
+        //validate invoice input
+        $validator = Validator::make($input, [
+            'invoice_number' => 'required',
+            'sender' => 'required',
+            'bill_to' => 'required',
+            'ship_to' => 'required',
+            'date' => 'required',
+            'due_date' => 'required',
+            'additional_note' => 'required',
+            'notes' => 'required',
+            'terms' => 'required',
+            'sub_total' => 'required',
+            'tax' => 'required',
+            'total' => 'required',
+            'items.*.description' => 'required',
+            'items.*.quantity' => 'required',
+            'items.*.rate' => 'required',
+            'items.*.discount' => 'required',
+            'items.*.amount' => 'required',
+
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()], 400);
+        }
 
         // Create a new invoice record
         $invoice = new Invoice();
@@ -41,12 +71,46 @@ class InvoiceGeneratorController extends Controller
             $invoice_item->save();
         }
 
-        return response()->json(['message' => 'Invoice created successfully'], 200);
+        return response()->json(
+            [
+                'status' => 'success',
+                'message' => 'Invoice created successfully'
+            ], 200);
     }
 
     protected final function invoice_create(Request $request)
     {
         $input = json_decode($request->input('invoice'), true);
+
+        if(!isset($input)){
+            return response()->json(['message' => 'Invoice data is required'], 400);
+        }
+
+        //validate invoice input
+        $validator = Validator::make($input, [
+            'invoice_number' => 'required',
+            'sender' => 'required',
+            'bill_to' => 'required',
+            'ship_to' => 'required',
+            'date' => 'required',
+            'due_date' => 'required',
+            'additional_note' => 'required',
+            'notes' => 'required',
+            'terms' => 'required',
+            'sub_total' => 'required',
+            'tax' => 'required',
+            'total' => 'required',
+            'items.*.description' => 'required',
+            'items.*.quantity' => 'required',
+            'items.*.rate' => 'required',
+            'items.*.discount' => 'required',
+            'items.*.amount' => 'required',
+
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()], 400);
+        }
 
         // Create a new invoice record
         $invoice = new Invoice();
